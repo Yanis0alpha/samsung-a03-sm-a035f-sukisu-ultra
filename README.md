@@ -14,7 +14,7 @@ This kernel brings root support to a device family (Unisoc T606, budget Samsung 
 
 ## Features
 
-- **SukiSU Ultra** integration (build 40798) — root management with KPM support
+- **SukiSU Ultra** integration (build 40798) — root management; KPM is supported upstream but not enabled in this compiled build 
 - No SUSFS layer — lighter, fewer moving parts, no mount/root hiding
 - Bootloop diagnostics via pstore/ramoops during bring-up
 
