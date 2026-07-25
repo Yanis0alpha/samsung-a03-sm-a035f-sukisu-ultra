@@ -34,7 +34,8 @@ Built via **Google Colab** (no local toolchain required). Build script and instr
 # high-level flow
 1. Clone this repo
 2. Run the Colab build notebook
-3. Flash via AnyKernel3
+3. unpack the boot.img cp Image karnel and repack your boot.img using magiskboot in termux
+4. and flash your new boot in odin or fasboot recovery or twrp
 ```
 
 ## Installation
