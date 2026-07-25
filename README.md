@@ -1,63 +1,58 @@
-# samsung-a03-sm-a035f-sukisu-ultra
-# Samsung Galaxy A03 (SM-A035F) — SukiSU Ultra Kernel
+# SukiSU Ultra Kernel — Samsung Galaxy A03 (SM-A035F)
 
-Custom Samsung Galaxy A03 kernel build with **SukiSU Ultra** support for **SM-A035F**  
-SoC: **Unisoc T616**  
-Base kernel: **4.14.199**  
-Android: **13**
+Custom Android kernel with root support (KernelSU / SukiSU Ultra), built for the **Samsung Galaxy A03 (SM-A035F, Unisoc T606)**. This is the SUSFS-free variant — no susfs4ksu hooks, no `set_memory.h` backport needed.
 
-## Current status
+![Device](https://img.shields.io/badge/device-SM--A035F-blue)
+![SoC](https://img.shields.io/badge/SoC-Unisoc%20T606-blue)
+![Kernel](https://img.shields.io/badge/kernel-4.14%20%2F%204.19-orange)
+![Root](https://img.shields.io/badge/root-SukiSU%20Ultra-green)
+![License](https://img.shields.io/badge/license-GPL--2.0-lightgrey)
 
-- ✅ Kernel boots
-- ✅ `su` works
-- ✅ `ksud` works
-- ✅ `su -c id` works
-- ✅ Module installation works
-- ✅ `kernel_umount` supported
-- ✅ `su_compat` supported
-- ⚠️ `selinux_hide` not supported on this kernel branch
-- ⚠️ Experimental / WIP
+## Overview
 
-## Versions
+This kernel brings root support to a device family (Unisoc T606, budget Samsung A-series) that has very little official support from the custom-kernel community. It was built and iterated entirely on a low-spec machine (Compaq Presario CQ62) using Google Colab for compilation.
 
-- Kernel root implementation: **SukiSU Ultra build 40798**
-- Manager tested: **SukiSU Ultra Manager 40796**
-- Branch used: **builtin**
-- Base commit used for userspace compatibility: **b59aca0a**
+## Features
 
-## Device information
+- **SukiSU Ultra** integration (build 40798) — root management with KPM support
+- No SUSFS layer — lighter, fewer moving parts, no mount/root hiding
+- Bootloop diagnostics via pstore/ramoops during bring-up
 
-- Device: **Samsung Galaxy A03**
-- Model: **SM-A035F**
-- SoC: **Unisoc T616**
-- Kernel version: **4.14.199**
+## Compatibility
 
-## Important notes
+| Device | Model | SoC | Status |
+|---|---|---|---|
+| Galaxy A03 | SM-A035F | Unisoc T606 | ✅ Tested, daily driver |
 
-This device expects the kernel image format:
+Tested against **VoltageOS** (GSI) as the primary ROM.
 
-- ✅ `Image`
-- ❌ `Image.gz`
+## Build
 
-Using `Image.gz` directly in the repacked `boot.img` caused boot issues.
+Built via **Google Colab** (no local toolchain required). Build script and instructions: see [`docs/BUILDING.md`](docs/BUILDING.md).
 
-## Flashing
+```bash
+# high-level flow
+1. Clone this repo
+2. Run the Colab build notebook
+3. Flash via AnyKernel3
+```
 
-Samsung device flashing is done through **Odin**, not fastboot.
+## Installation
 
-Typical workflow:
+1. Unlock bootloader (SM-A035F, Unisoc preloader-based verification — see notes in `docs/`)
+2. Flash a compatible GSI (VoltageOS recommended) or stock-based ROM
+3. Flash this kernel via recovery/fastboot using the AnyKernel3 zip from [Releases](../../releases)
+4. Install the SukiSU Ultra manager APK to complete root setup
 
-1. Extract stock `boot.img`
-2. Unpack boot image
-3. Replace stock kernel with compiled `Image`
-4. Repack boot image
-5. Convert to `boot.img.lz4`
-6. Pack into `.tar`
-7. Flash with **Odin** in **AP**
+## Known issues / limitations
 
-## Tested commands
+- Battery charge control via sysfs is currently blocked by SELinux policy (not yet resolved)
+- GKI-mode OTA slot switching untested on this device
 
-```sh
-su -c id
-/data/adb/ksud debug version
-/data/adb/ksud feature list
+## Credits
+
+See [CREDITS.md](CREDITS.md) for full attribution to upstream projects and authors.
+
+## License
+
+This project is licensed under **GPL-2.0-only**, consistent with the Linux kernel and upstream KernelSU/SukiSU Ultra licensing. See [LICENSE](LICENSE).
