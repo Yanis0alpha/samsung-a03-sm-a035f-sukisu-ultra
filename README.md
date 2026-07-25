@@ -54,6 +54,9 @@ Built via **Google Colab** (no local toolchain required). Build script and instr
 
 See [CREDITS.md](CREDITS.md) for full attribution to upstream projects and authors.
 
+- **[KernelSU](https://github.com/tiann/KernelSU)** by [tiann](https://github.com/tiann) — the original kernel-based root solution this project builds on.
+- **[SukiSU Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra)** by [ShirkNeko](https://github.com/ShirkNeko) and contributors — the fork this kernel integrates for root management and KPM support
+
 ## License
 
 This project is licensed under **GPL-2.0-only**, consistent with the Linux kernel and upstream KernelSU/SukiSU Ultra licensing. See [LICENSE](LICENSE).
